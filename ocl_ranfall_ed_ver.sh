@@ -12,9 +12,6 @@ modifications should however be communicated to the author via email at winifred
 your compliance, and thanks for choosing this package.
 '''
 
-mkdir All_grids_data
-mkdir onsetcess
-
 for dt in {1..6000}  ###loop through grids containing rainfall values
    do
   
