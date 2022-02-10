@@ -1,9 +1,9 @@
 #!/bin/bash
  
 '''
-Released by Winifred A. Atiah and Edmund I. Yamba.
- 
-When using this code, please acknowledge the Meteorology and Climate Science Unit (KNUST).
+Released by Winifred A. Atiah and Edmund I. Yamba. Re-adapted by EduardoGB
+
+When using this code, please acknowledge the Meteorology and Climate Science Unit (KNUST) and the International Institute of Tropical Agriculture (IITA).
 
 This script computes the rainfall indices (onsets, cessations and durations) from rainfall data using the percentage mean cumulative rainfall amount (PMCR) method. 
 
@@ -12,15 +12,15 @@ modifications should however be communicated to the author via email at winifred
 your compliance, and thanks for choosing this package.
 '''
 
-path1=~/Documents/Consul_Work_AFRISING/Chirps_daily/New_data/Ghana_data
-
+mkdir All_grids_data
+mkdir onsetcess
 
 for dt in {1..6000}  ###loop through grids containing rainfall values
    do
   
      
-     input=${path1}/All_grids_data/RR_GH_${dt}
-     output=${path1}/onsetcess/RR_GH_${dt}_ocl.txt
+     input=All_grids_data/RR_GH_${dt}
+     output=onsetcess/RR_GH_${dt}_ocl.txt
  
      
     if [ -s $output ] ; then
