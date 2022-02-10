@@ -40,7 +40,10 @@ cd ../
 python3 ./Data_extract.py $xmin $ymax $xmax $ymin
 
 wait
+mkdir All_grids_data
+mkdir onsetcess
 
+# Run the shell script for computing onset, cessation and length of the season
 ./ocl_ranfall_ed_ver.sh
 
 exit
