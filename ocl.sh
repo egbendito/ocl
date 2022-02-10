@@ -34,6 +34,8 @@ ncrcat sub/*.nc ../chirps.nc
 
 wait
 
+cd ../
+
 # Run the python data extraction
 python3 ./Data_extract.py $xmin $ymax $xmax $ymin
 
