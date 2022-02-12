@@ -3,3 +3,6 @@
 .RData
 .Ruserdata
 ocl.Rproj
+data/
+onsetcess/
+All_grids_data/

@@ -4,25 +4,24 @@
 ########## Import necessary libraries
 import numpy as np
 from netCDF4 import Dataset
-import glob
-import matplotlib.pyplot as plt
-from matplotlib import gridspec
-from mpl_toolkits.basemap import Basemap
-import datetime
+# import glob
+# import matplotlib.pyplot as plt
+# from matplotlib import gridspec
+# from mpl_toolkits.basemap import Basemap
+# import datetime
 import os
 import io
 import scipy as sp
 ### in order to execute R in Python
 import subprocess
 from os.path import basename
-import pandas as pd
-import csv
-import subprocess
+# import pandas as pd
+# import csv
 from collections.abc import Iterable
 import sys
 
 ######### Assignemt of netcdf file to a variable
-in_file='chirps.nc'
+in_file='data/chirps.nc'
 
 #### Reading in the variables of the netcdf data
 nc_fil = Dataset(in_file,'r')
@@ -32,10 +31,10 @@ lats= nc_fil.variables['lat'][:]
 prec = nc_fil.variables['precip'][:]
 
 #### Read XY values from bash arguments
-xmin = sys.argv[1]
-xmax = sys.argv[3]
-ymin = sys.argv[4]
-ymax = sys.argv[2]
+xmin = float(sys.argv[1])
+xmax = float(sys.argv[3])
+ymin = float(sys.argv[4])
+ymax = float(sys.argv[2])
 
 #### Create arrays of coords
 idx_latarea = np.where((lats >=  ymin ) & (lats <=  ymax))[0]
@@ -62,7 +61,7 @@ for i in range(len(rains)):
 # Each year has 365 days... idk why!
 yr = []
 doy = []
-for y in range(1981,2020):
+for y in range(1981,2021):
     for d in range(1,366):
         yr.append(y)
         doy.append(d)

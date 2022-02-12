@@ -12,7 +12,7 @@ modifications should however be communicated to the author via email at winifred
 your compliance, and thanks for choosing this package.
 '''
 
-for dt in {1..6000}  ###loop through grids containing rainfall values
+for dt in {1..15000}  ###loop through grids containing rainfall values
    do
   
      
@@ -47,7 +47,7 @@ for dt in {1..6000}  ###loop through grids containing rainfall values
                  }' dat4.txt > dat5.txt
                 rm dat4.txt
                 rm total.txt
-      Cumulative###c         
+#      Cumulative###c         
      awk 'BEGIN {sum=0}
                 {sum=sum+$2;
                 printf("%d %6.2f\n",$1,sum);
