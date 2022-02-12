@@ -40,7 +40,7 @@ ymax=12
 # done
 
 # Use NCO (Operators for NetCDF files) https://github.com/nco/nco
-ncrcat sub/*.nc ../chirps.nc
+ncecat sub/*.nc chirps.nc
 
 wait
 
@@ -54,7 +54,7 @@ python3 ./Data_extract.py $xmin $ymax $xmax $ymin
 
 wait
 
-# # Run the shell script for computing onset, cessation and length of the season
-# ./ocl_ranfall_ed_ver.sh
+# Run the shell script for computing onset, cessation and length of the season
+./ocl_ranfall_ed_ver.sh
 
 exit
