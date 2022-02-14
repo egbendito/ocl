@@ -1,4 +1,4 @@
-#! /usr/bin/Rscript
+#! /usr/bin/python3
 
 
 ########## Import necessary libraries
