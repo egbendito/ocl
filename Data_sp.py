@@ -14,7 +14,7 @@ import re
 
 # Set the input data:
 i = 'data/onsetcess/'
-o = 'data/sp_output/'
+o = 'data/spatial/'
 os.makedirs(o, exist_ok=True)
 
 xmin = float(sys.argv[1])
@@ -51,27 +51,27 @@ drv = gdal.GetDriverByName("GTiff")
 onset = dict.fromkeys(years)
 for k in onset.keys():
   onset[k] = np.zeros(shape=(len(ylen),len(xlen)))
-  drv.Create("data/sp_output/onset_" + str(k) + ".tif", len(ylen), len(xlen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, xskew, uly, yskew, yres])
+  drv.Create(str(o) + "onset_" + str(k) + ".tif", len(ylen), len(xlen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, xskew, uly, yskew, yres])
 cess = dict.fromkeys(years)
 for k in cess.keys():
   cess[k] = np.zeros(shape=(len(ylen),len(xlen)))
-  drv.Create("data/sp_output/cessation_" + str(k) + ".tif", len(ylen), len(xlen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, xskew, uly, yskew, yres])
+  drv.Create(str(o) + "cessation_" + str(k) + ".tif", len(ylen), len(xlen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, xskew, uly, yskew, yres])
 leng = dict.fromkeys(years)
 for k in leng.keys():
   leng[k] = np.zeros(shape=(len(ylen),len(xlen)))
-  drv.Create("data/sp_output/length_" + str(k) + ".tif", len(ylen), len(xlen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, xskew, uly, yskew, yres])
+  drv.Create(str(o) + "length_" + str(k) + ".tif", len(ylen), len(xlen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, xskew, uly, yskew, yres])
 
 # # Process & populate GeoTIFF
 f = 1
 while f <= len(files):
-  for x in range(len(xlen)):
-    for y in range(len(ylen)):
+  for y in range(len(ylen)):
+    for x in range(len(xlen)):
         d = open(str(i) + 'RR_GH_' + str(f) + '_ocl.txt')#.read()
         for l in d.readlines():
           year = l.split('   ')[0].replace('\n', '')
           start = l.split('   ')[1].replace('\n', '')
           onset[str(year)][x][y] = start
-          tif = gdal.Open("data/sp_output/onset_" + str(year) + ".tif", gdal.GA_Update)
+          tif = gdal.Open(str(o) + "onset_" + str(year) + ".tif", gdal.GA_Update)
           tif.GetRasterBand(1).WriteArray(onset[str(year)])
           tif.FlushCache()
         f = f + 1
@@ -85,7 +85,7 @@ while f <= len(files):
           year = l.split('   ')[0].replace('\n', '')
           end = l.split('   ')[2].replace('\n', '')
           cess[str(year)][x][y] = end
-          tif = gdal.Open("data/sp_output/cessation_" + str(year) + ".tif", gdal.GA_Update)
+          tif = gdal.Open(str(o) + "cessation_" + str(year) + ".tif", gdal.GA_Update)
           tif.GetRasterBand(1).WriteArray(cess[str(year)])
           tif.FlushCache()
         f = f + 1
@@ -99,7 +99,7 @@ while f <= len(files):
           year = l.split('   ')[0].replace('\n', '')
           le = l.split('   ')[2].replace('\n', '')
           leng[str(year)][x][y] = le
-          tif = gdal.Open("data/sp_output/length_" + str(year) + ".tif", gdal.GA_Update)
+          tif = gdal.Open(str(o) + "length_" + str(year) + ".tif", gdal.GA_Update)
           tif.GetRasterBand(1).WriteArray(leng[str(year)])
           tif.FlushCache()
         f = f + 1

@@ -1,29 +1,24 @@
 #!/bin/bash
  
-'''
-Released by Winifred A. Atiah and Edmund I. Yamba. Re-adapted by EduardoGB
-
-When using this code, please acknowledge the Meteorology and Climate Science Unit (KNUST) and the International Institute of Tropical Agriculture (IITA).
-
-This script computes the rainfall indices (onsets, cessations and durations) from rainfall data using the percentage mean cumulative rainfall amount (PMCR) method. 
-
-This code is open-licensed, hence modifications are allowed to suit the users preference and work. Any major 
-modifications should however be communicated to the author via email at winifred.a.atiah@aims-senegal.org. We appreciate 
-your compliance, and thanks for choosing this package.
-'''
+# '''
+# Released by Winifred A. Atiah and Edmund I. Yamba. Re-adapted by EduardoGB
+# 
+# When using this code, please acknowledge the Meteorology and Climate Science Unit (KNUST) and the International Institute of Tropical Agriculture (IITA).
+# 
+# This script computes the rainfall indices (onsets, cessations and durations) from rainfall data using the percentage mean cumulative rainfall amount (PMCR) method. 
+# 
+# This code is open-licensed, hence modifications are allowed to suit the users preference and work. Any major 
+# modifications should however be communicated to the author via email at winifred.a.atiah@aims-senegal.org. We appreciate 
+# your compliance, and thanks for choosing this package.
+# '''
 
 declare -i nfiles=$(find data/All_grids_data/ -type f | wc -l)
 
-for dt in $(seq 1 1 $nfiles)
-# for dt in {1..$(($nfiles))}  ###loop through grids containing rainfall values
-# # for dt in {1..1}  ###loop through grids containing rainfall values
+for dt in $(seq 1 1 $nfiles) ###loop through grids containing rainfall values
    do
-   # echo $dt
-
 
      input=data/All_grids_data/RR_GH_${dt}
      output=data/onsetcess/RR_GH_${dt}_ocl.txt
-
 
     if [ -s $output ] ; then
        rm $output
@@ -59,7 +54,6 @@ for dt in $(seq 1 1 $nfiles)
                 printf("%d %6.2f\n",$1,sum);
                 }' dat5.txt > dat6.txt
                  rm dat5.txt
-
 
   # # print out the onset/cessation day
       awk '{if($2>=7){print $0}}' dat6.txt | head -1 > out1 # Onset point condition (EGB)
