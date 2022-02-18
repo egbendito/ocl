@@ -40,7 +40,7 @@ years = []
 for l in open(str(i) + str(files[0])):
   y = l.split('   ')[0].replace('\n', '')
   years.append(y)
-
+  
 # Determine the bounding-box of the AOI:
 src = gdal.Open('data/chirps.nc')
 ulx, xres, xskew, uly, yskew, yres  = src.GetGeoTransform()
@@ -52,8 +52,16 @@ onset = dict.fromkeys(years)
 for k in onset.keys():
   onset[k] = np.zeros(shape=(len(ylen),len(xlen)))
   drv.Create("data/sp_output/onset_" + str(k) + ".tif", len(ylen), len(xlen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, xskew, uly, yskew, yres])
+cess = dict.fromkeys(years)
+for k in cess.keys():
+  cess[k] = np.zeros(shape=(len(ylen),len(xlen)))
+  drv.Create("data/sp_output/cessation_" + str(k) + ".tif", len(ylen), len(xlen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, xskew, uly, yskew, yres])
+leng = dict.fromkeys(years)
+for k in leng.keys():
+  leng[k] = np.zeros(shape=(len(ylen),len(xlen)))
+  drv.Create("data/sp_output/length_" + str(k) + ".tif", len(ylen), len(xlen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, xskew, uly, yskew, yres])
 
-# Process & populate GeoTIFF
+# # Process & populate GeoTIFF
 f = 1
 while f <= len(files):
   for x in range(len(xlen)):
@@ -62,12 +70,36 @@ while f <= len(files):
         for l in d.readlines():
           year = l.split('   ')[0].replace('\n', '')
           start = l.split('   ')[1].replace('\n', '')
-          end = l.split('   ')[2].replace('\n', '')
-          leng = l.split('   ')[3].replace('\n', '')
           onset[str(year)][x][y] = start
           tif = gdal.Open("data/sp_output/onset_" + str(year) + ".tif", gdal.GA_Update)
           tif.GetRasterBand(1).WriteArray(onset[str(year)])
           tif.FlushCache()
-          # cess[x][y] = end
-          # length[x][y] = leng
+        f = f + 1
+# Process & populate GeoTIFF
+f = 1
+while f <= len(files):
+  for x in range(len(xlen)):
+    for y in range(len(ylen)):
+        d = open(str(i) + 'RR_GH_' + str(f) + '_ocl.txt')#.read()
+        for l in d.readlines():
+          year = l.split('   ')[0].replace('\n', '')
+          end = l.split('   ')[2].replace('\n', '')
+          cess[str(year)][x][y] = end
+          tif = gdal.Open("data/sp_output/cessation_" + str(year) + ".tif", gdal.GA_Update)
+          tif.GetRasterBand(1).WriteArray(cess[str(year)])
+          tif.FlushCache()
+        f = f + 1
+# Process & populate GeoTIFF
+f = 1
+while f <= len(files):
+  for x in range(len(xlen)):
+    for y in range(len(ylen)):
+        d = open(str(i) + 'RR_GH_' + str(f) + '_ocl.txt')#.read()
+        for l in d.readlines():
+          year = l.split('   ')[0].replace('\n', '')
+          le = l.split('   ')[2].replace('\n', '')
+          leng[str(year)][x][y] = le
+          tif = gdal.Open("data/sp_output/length_" + str(year) + ".tif", gdal.GA_Update)
+          tif.GetRasterBand(1).WriteArray(leng[str(year)])
+          tif.FlushCache()
         f = f + 1
