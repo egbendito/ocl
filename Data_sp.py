@@ -51,15 +51,15 @@ drv = gdal.GetDriverByName("GTiff")
 onset = dict.fromkeys(years)
 for k in onset.keys():
   onset[k] = np.zeros(shape=(len(ylen),len(xlen)))
-  drv.Create(str(o) + "onset_" + str(k) + ".tif", len(ylen), len(xlen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, xskew, uly, yskew, yres])
+  drv.Create(str(o) + "onset_" + str(k) + ".tif", len(ylen), len(xlen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, xskew, uly, yskew, -1*yres]) # Need to invert the vertical resolution since we are starting from the top-left corner, and going downwards
 cess = dict.fromkeys(years)
 for k in cess.keys():
   cess[k] = np.zeros(shape=(len(ylen),len(xlen)))
-  drv.Create(str(o) + "cessation_" + str(k) + ".tif", len(ylen), len(xlen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, xskew, uly, yskew, yres])
+  drv.Create(str(o) + "cessation_" + str(k) + ".tif", len(ylen), len(xlen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, xskew, uly, yskew, -1*yres]) # Need to invert the vertical resolution since we are starting from the top-left corner, and going downwards
 leng = dict.fromkeys(years)
 for k in leng.keys():
   leng[k] = np.zeros(shape=(len(ylen),len(xlen)))
-  drv.Create(str(o) + "length_" + str(k) + ".tif", len(ylen), len(xlen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, xskew, uly, yskew, yres])
+  drv.Create(str(o) + "length_" + str(k) + ".tif", len(ylen), len(xlen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, xskew, uly, yskew, -1*yres]) # Need to invert the vertical resolution since we are starting from the top-left corner, and going downwards
 
 # # Process & populate GeoTIFF
 f = 1
