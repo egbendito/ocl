@@ -51,15 +51,15 @@ drv = gdal.GetDriverByName("GTiff")
 onset = dict.fromkeys(years)
 for k in onset.keys():
   onset[k] = np.zeros(shape=(len(ylen),len(xlen)))
-  drv.Create(str(o) + "onset_" + str(k) + ".tif", len(xlen), len(ylen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, 0, uly, 0, yres]) # Need to invert the vertical resolution since we are starting from the top-left corner, and going downwards
+  drv.Create(str(o) + "onset_" + str(k) + ".tif", len(xlen), len(ylen), 1, gdal.GDT_Float32).SetGeoTransform([xmin, xres, 0, ymin, 0, -1*yres]) # Need to invert the vertical resolution since we are starting from the top-left corner, and going downwards
 cess = dict.fromkeys(years)
 for k in cess.keys():
   cess[k] = np.zeros(shape=(len(ylen),len(xlen)))
-  drv.Create(str(o) + "cessation_" + str(k) + ".tif", len(xlen), len(ylen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, 0, uly, 0, yres]) # Need to invert the vertical resolution since we are starting from the top-left corner, and going downwards
+  drv.Create(str(o) + "cessation_" + str(k) + ".tif", len(xlen), len(ylen), 1, gdal.GDT_Float32).SetGeoTransform([xmin, xres, 0, ymin, 0, -1*yres]) # Need to invert the vertical resolution since we are starting from the top-left corner, and going downwards
 leng = dict.fromkeys(years)
 for k in leng.keys():
   leng[k] = np.zeros(shape=(len(ylen),len(xlen)))
-  drv.Create(str(o) + "length_" + str(k) + ".tif", len(xlen), len(ylen), 1, gdal.GDT_Float32).SetGeoTransform([ulx, xres, 0, uly, 0, yres]) # Need to invert the vertical resolution since we are starting from the top-left corner, and going downwards
+  drv.Create(str(o) + "length_" + str(k) + ".tif", len(xlen), len(ylen), 1, gdal.GDT_Float32).SetGeoTransform([xmin, xres, 0, ymin, 0, -1*yres]) # Need to invert the vertical resolution since we are starting from the top-left corner, and going downwards
 
 # Process & populate GeoTIFF
 f = 1
@@ -99,7 +99,7 @@ while f <= len(files):
         d = open(str(i) + 'RR_' + str(f) + '_ocl.txt')#.read()
         for l in d.readlines():
           year = l.split('   ')[0].replace('\n', '')
-          le = l.split('   ')[2].replace('\n', '')
+          le = l.split('   ')[3].replace('\n', '')
           leng[str(year)][y][x] = le
           tif = gdal.Open(str(o) + "length_" + str(year) + ".tif", gdal.GA_Update)
           tif.GetRasterBand(1).WriteArray(leng[str(year)])
