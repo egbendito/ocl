@@ -17,8 +17,8 @@ declare -i nfiles=$(find data/All_grids_data/ -type f | wc -l)
 for dt in $(seq 1 1 $nfiles) ###loop through grids containing rainfall values
    do
 
-     input=data/All_grids_data/RR_GH_${dt}
-     output=data/onsetcess/RR_GH_${dt}_ocl.txt
+     input=data/All_grids_data/RR_${dt}
+     output=data/onsetcess/RR_${dt}_ocl.txt
 
     if [ -s $output ] ; then
        rm $output

@@ -6,10 +6,10 @@ mkdir sub/
 rm -rf sub/*
 
 # Define AOI
-xmin=-3.5
-xmax=1.5
-ymin=7
-ymax=12
+xmin=7
+xmax=10
+ymin=10
+ymax=13
 
 # Loop through years with 4 (n) parallel processes
 for i in $(seq 1981 8 2019)

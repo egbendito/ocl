@@ -66,5 +66,5 @@ dates = np.array([yr,doy])
 
 ###### Saving files ready for R code on various indices
 for i in range(len(rains)):
-    print('Done with RR_GH_'+str(i+1))
-    np.savetxt('data/All_grids_data/'+'RR_GH_'+str(i+1),np.c_[dates[0],dates[1],rs[i]],fmt='%s')
+    print('Done with RR_'+str(i+1))
+    np.savetxt('data/All_grids_data/'+'RR_'+str(i+1),np.c_[dates[0],dates[1],rs[i]],fmt='%s')

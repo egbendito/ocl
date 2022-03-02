@@ -22,11 +22,15 @@ xmax = float(sys.argv[3])
 ymin = float(sys.argv[4])
 ymax = float(sys.argv[2])
 
-print('Dataset of: ' + str(len(np.arange(xmin, xmax, 0.05))) + ' x ' + str(len(np.arange(ymin, ymax, 0.05))) + ' dimensions.')
+# Determine the bounding-box of the AOI:
+src = gdal.Open('data/chirps.nc')
+ulx, xres, xskew, uly, yskew, yres  = src.GetGeoTransform()
+
+print('Dataset of: ' + str(len(np.arange(xmin, xmax, xres))) + ' x ' + str(len(np.arange(ymin, ymax, yres))) + ' dimensions.')
 
 # Create arrays for lat and lon
-xlen = np.arange(xmin, xmax, 0.05)
-ylen = np.arange(ymin, ymax, 0.05)
+xlen = np.arange(xmin, xmax, xres)
+ylen = np.arange(ymin, ymax, yres)
 
 # Get list of OCL result txt files
 path, dirs, files = next(os.walk(i))
@@ -41,9 +45,6 @@ for l in open(str(i) + str(files[0])):
   y = l.split('   ')[0].replace('\n', '')
   years.append(y)
 
-# Determine the bounding-box of the AOI:
-src = gdal.Open('data/chirps.nc')
-ulx, xres, xskew, uly, yskew, yres  = src.GetGeoTransform()
 # define a output format
 drv = gdal.GetDriverByName("GTiff")
 
